@@ -1,0 +1,42 @@
+In this assignment we will implement three variations of the disjoint union-find algorithm
+alongwith its data structure as discussed in class. 
+We are to implement this using object oriented approaches and C#/C++/Java. 
+The data structure for the disjoint union-find is such that 
+every set is kept in a tree with the nodes pointing to their parents. 
+Further, there would be a pointer from each item to its corresponding node 
+in the tree of the set to which it currently belongs. 
+Each set's internal name is the smallest item in the set. 
+Each node in the tree would keep a parent pointer, 
+NumberOfItemsInSubtree field indicating number of items in the subtree rooted at the node, 
+InternalNameOfSet (the root of a tree would have the correct internal set name; all others would be obsolete), 
+and any other necessary information.
+
+Three variations of the disjoint union-find algorithm are 
+(Soln1) weighting rule is applied during a union operation and path-compression is performed durng find, 
+(Soln2) use the weighting rule but no path-compression, 
+and (Soln3) no weighting rule and no path-compression during union’s and find’s, respectively.
+
+Given a find operation, such as f(123), 
+your find algorithm should output the internal set to which item 123 currently belongs (and for Soln1 performs a path compression). 
+Given a union operation, such as u(12,45), first find the sets, say x and y, 
+to which items 12 and 45 belong and then union the sets x and y (for Soln1 and Soln2 use weighting rule).
+
+Given a sequence of finds and unions, 
+record the time taken by this sequence and the heights of non-singleton sets 
+(i.e., sets having more than one items) for each of the three variations Soln1, Soln2 and Soln3. 
+Analyze these values for different sequences and size of universes. 
+Print the values in a nice format along with non-singleton sets. 
+Your program should be well documented, structured and follow object oriented approaches. 
+Your output should be neat, clean and readable. Highlight important portions of your output.
+
+The data file is hw4.dat and its format is as follows. (For each of the ni value run the k sequences as given below.)
+
+n1, n2, n3, ..., nl - sizes of total number of items for each of the l test runs
+
+m1 - size of the first sequence of finds and unions
+sequence of length m1 with find being f(x) and union being u(x,y), such as f(x), f(c), u(x,y), u(y,z),f(d)
+m2 - size of the second sequence of finds and unions
+sequence of length m2
+
+mk - size of the k-th sequence of finds and unions
+sequence of length mk 
