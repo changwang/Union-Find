@@ -6,13 +6,10 @@ Created on Oct 30, 2009
 
 @author: changwang
 
-Solution 1 to union-find structure.
-In this solution, using weighting rule and path-compression.
-the time of this algorithm should be O(nG(n)).
-G(n) is inverse of Ackermann's function.
-So, the time could be considered linear time.
+Solution 2 to union-find structure.
+In this solution, just using weighting rule.
+The time of this algorithm should be O(nlogn)
 '''
-
 from datastructure import Node
 from utils import path_printer
 
@@ -63,14 +60,9 @@ class UnionFind:
         while root != path[-1]:
             path.append(root)
             root = self.parents[root]
-            
-        ''' This part handles the path-compression,
-        changing the parent of the nodes which are in the path to root .'''
-        for ancestor in path:
-            self.parents[ancestor] = root
-        
-        path_printer(path)
 
+        path_printer(path)
+        
         # return the root of the set
         return root
     

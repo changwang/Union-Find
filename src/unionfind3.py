@@ -1,21 +1,18 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/local/bin/python
+#--*-- encoding=utf-8 --*--
 
 '''
 Created on Oct 30, 2009
 
 @author: changwang
 
-Solution 1 to union-find structure.
-In this solution, using weighting rule and path-compression.
-the time of this algorithm should be O(nG(n)).
-G(n) is inverse of Ackermann's function.
-So, the time could be considered linear time.
+Solution 3 to union-find structure.
+In this solution, without any heuristic improvement.
 '''
 
 from datastructure import Node
 from utils import path_printer
-
+    
 class UnionFind:
     ''' 
     The Union-Find data structure.
@@ -64,14 +61,7 @@ class UnionFind:
             path.append(root)
             root = self.parents[root]
             
-        ''' This part handles the path-compression,
-        changing the parent of the nodes which are in the path to root .'''
-        for ancestor in path:
-            self.parents[ancestor] = root
-        
         path_printer(path)
-
-        # return the root of the set
         return root
     
     def internalNameOfSet(self, value):
@@ -88,8 +78,8 @@ class UnionFind:
 
     def union(self, *values):
         ''' merge the sets which contain the given values. '''
-        
         roots = []
+        
         for value in values:
             result = self.find(value)
             if result not in roots:
@@ -101,17 +91,10 @@ class UnionFind:
             print 'The node ' + str(values[0]) + ' and node ' + str(values[1]) + ' are in the same set.'
             return
         
-        # here I sort the list, because I wanna handle the items by ascending order.
+        
+        '''
+        The strategy here is add the set with larger set name to the set with smaller set name.
+        '''
         roots.sort(cmp=lambda x, y: cmp(x.value, y.value))
-        heaviest = roots[0]
-        
-        for n in roots:
-            ''' Find out which root node contains the largest rank. '''
-            if self.parents[n].rank > self.parents[heaviest].rank:
-                heaviest = n
-        
-        for r in roots:
-            ''' Append the smaller set to the larger set. '''
-            if r!= heaviest:
-                self.parents[heaviest].rank += self.parents[r].rank
-                self.parents[r] = heaviest
+        self.parents[roots[0]].rank += self.parents[roots[1]].rank
+        self.parents[roots[1]] = self.parents[roots[0]]

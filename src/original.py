@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/local/bin/python
+#--*-- encoding=utf-8 --*--
 
 '''
 Created on Oct 30, 2009
@@ -14,11 +14,9 @@ So, the time could be considered linear time.
 '''
 
 from datastructure import Node
-from utils import path_printer
 
 class UnionFind:
-    ''' 
-    The Union-Find data structure.
+    ''' The Union-Find data structure.
     Each UnionFind instance maintains a family of disjoint sets of
     hashable objects, supporting the following methods:
     
@@ -53,6 +51,7 @@ class UnionFind:
             then create it.'''
             
             self.parents[node] = node.parent
+            print 'current path is: ' + str(node)
             return node
         
         ''' This is a critical part in this method.
@@ -69,8 +68,7 @@ class UnionFind:
         for ancestor in path:
             self.parents[ancestor] = root
         
-        path_printer(path)
-
+        print 'current path is: ' + str(path)
         # return the root of the set
         return root
     
@@ -86,32 +84,29 @@ class UnionFind:
                 print (node.rank - 1)
                 return;
 
-    def union(self, *values):
-        ''' merge the sets which contain the given values. '''
-        
+    def union(self, *args):
+        #roots = [self.find(node) for node in args]
         roots = []
-        for value in values:
-            result = self.find(value)
-            if result not in roots:
-                roots.append(result)
-        
+        for value in args:
+            if self.find(value) not in roots:
+                roots.append(self.find(value))
         if len(roots) <= 1:
-            ''' If the length of the list is less or equal than 1,
-            which means the given nodes are in the same set. '''
-            print 'The node ' + str(values[0]) + ' and node ' + str(values[1]) + ' are in the same set.'
-            return
-        
-        # here I sort the list, because I wanna handle the items by ascending order.
+            print 'The node ' + str(args[0]) + ' and node ' + str(args[1]) + ' are in the same set.'
         roots.sort(cmp=lambda x, y: cmp(x.value, y.value))
         heaviest = roots[0]
         
         for n in roots:
-            ''' Find out which root node contains the largest rank. '''
             if self.parents[n].rank > self.parents[heaviest].rank:
                 heaviest = n
         
         for r in roots:
-            ''' Append the smaller set to the larger set. '''
             if r!= heaviest:
                 self.parents[heaviest].rank += self.parents[r].rank
                 self.parents[r] = heaviest
+
+if __name__ == '__main__':
+    uf = UnionFind()
+    uf.find(1)
+    uf.find(3)
+    uf.union(3, 1, 5)
+    print uf.parents
