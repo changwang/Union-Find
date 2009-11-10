@@ -45,7 +45,7 @@ class UnionFind:
         # the parent node as the value.
         self.parents = {}
     
-    def find(self, value):
+    def find(self, value, print_path=False):
         node = Node(value)
         
         if node not in self.parents:
@@ -69,7 +69,8 @@ class UnionFind:
         for ancestor in path:
             self.parents[ancestor] = root
         
-        path_printer(path)
+#        if print_path:
+#            path_printer(path)
 
         # return the root of the set
         return root
@@ -77,14 +78,13 @@ class UnionFind:
     def internalNameOfSet(self, value):
         ''' Find the root of the set, then return its name. '''
         root = self.find(value)
-        print root.value
+        return root.name
         
     def numberOfItemsInSubtree(self, value):
         ''' Find the node, then return number of items in the subtree. '''
         for node in self.parents.keys():
             if node.value == value:
-                print (node.rank - 1)
-                return;
+                return (node.rank - 1)
 
     def union(self, *values):
         ''' merge the sets which contain the given values. '''
@@ -98,7 +98,7 @@ class UnionFind:
         if len(roots) <= 1:
             ''' If the length of the list is less or equal than 1,
             which means the given nodes are in the same set. '''
-            print 'The node ' + str(values[0]) + ' and node ' + str(values[1]) + ' are in the same set.'
+#            print 'The node ' + str(values[0]) + ' and node ' + str(values[1]) + ' are in the same set.'
             return
         
         # here I sort the list, because I wanna handle the items by ascending order.
@@ -109,7 +109,10 @@ class UnionFind:
             ''' Find out which root node contains the largest rank. '''
             if self.parents[n].rank > self.parents[heaviest].rank:
                 heaviest = n
-        
+
+        # assign the smallest name to the root
+        self.parents[heaviest].name = int(min([nr.name for nr in roots]))
+
         for r in roots:
             ''' Append the smaller set to the larger set. '''
             if r!= heaviest:

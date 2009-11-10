@@ -5,11 +5,14 @@
 Created on Nov 8, 2009
 
 @author: changwang
+
+Put some utilize function here.
 '''
 
 import re
 
 def parser(filename=None):
+    """ parse the input file into a readable format. """
     if filename == None:
         print "Please enter the file name!"
         return None;
@@ -28,6 +31,7 @@ def parser(filename=None):
     return whole
 
 def convert(str):
+    """ convert the each item into the readable format. """
     result = re.findall('\d+', str)
     if str.startswith("f"):
         return ('find', int(result[0]))
@@ -35,8 +39,9 @@ def convert(str):
         return ('union', (int(result[0]), int(result[1])))
 
 def path_printer(path):
+    """ print the path. """
     if len(path) == 1:
-        print str(path[0]) + ' is currently pointing to itself.'
+        print str(path[0]) + ' currently is in its own singleton set'
         return
     
     for node in path:

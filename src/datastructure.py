@@ -20,6 +20,9 @@ class Node:
         
         # The rank means how many nodes are contained by current node. 
         self.rank = 1
+        
+        # Name of the set current node belongs to.
+        self.name = self.value
     
     def __eq__(self, other):
         ''' This method is used to handle whether two nodes are equal,
