@@ -61,7 +61,7 @@ class UnionFind:
             path.append(root)
             root = self.parents[root]
 
-#        path_printer(path)
+        path_printer(path)
         
         # return the root of the set
         return root
@@ -89,7 +89,7 @@ class UnionFind:
         if len(roots) <= 1:
             ''' If the length of the list is less or equal than 1,
             which means the given nodes are in the same set. '''
-#            print 'The node ' + str(values[0]) + ' and node ' + str(values[1]) + ' are in the same set.'
+            print 'The node ' + str(values[0]) + ' and node ' + str(values[1]) + ' are in the same set.'
             return
         
         # here I sort the list, because I wanna handle the items by ascending order.
